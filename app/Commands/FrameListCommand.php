@@ -12,7 +12,8 @@ class FrameListCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'frame:list';
+    protected $signature = 'frame:list
+                           {--r|reverse : Display the results in reverse order.}';
 
     /**
      * @var string
@@ -23,7 +24,9 @@ class FrameListCommand extends Command
     {
         $this->table(
             ['ID', 'Project', 'Tags', 'Notes', 'Date', 'Start', 'End', 'Elapsed'],
-            Frame::query()->latest()->with(['project', 'tags'])->get()->map(function (Frame $frame) {
+            Frame::query()->latest()->with(['project', 'tags'])->get()->when($this->option('reverse'), function ($q) {
+                return $q->reverse();
+            })->map(function (Frame $frame) {
                 return [
                     $frame->getKey(),
                     $frame->project->name,
