@@ -5,4 +5,5 @@
 /.vagrant
 /database/database.sqlite
 .php_cs.cache
+.phpunit.result.cache
 hours.phar
